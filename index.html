@@ -17,6 +17,12 @@
     <div class="tech-grid-bg"></div>
     <div class="glow-bg"></div>
 
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <span class="pulse-dot"></span>
+        <p><strong>Novedad:</strong> Conoce NEXUS ERP, el único sistema administrativo multiempresa en Venezuela. <a href="#nexus-erp">Saber más <span>→</span></a></p>
+    </div>
+
     <nav class="navbar" id="navbar">
         <a href="#" class="logo">
             <img src="images/logo.png" alt="NEXUS Technology" class="logo-img">
@@ -62,6 +68,41 @@
 <span class="function">async function</span> <span class="function">evolve</span>() {
   <span class="keyword">await</span> nexus.<span class="method">launch</span>();
 }</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lauch Section: NEXUS ERP -->
+        <section id="nexus-erp" class="launch-section">
+            <div class="launch-container hud-box reveal">
+                <div class="scanner"><div class="scanner-line"></div></div>
+                <div class="launch-content">
+                    <div class="launch-badge">LANZAMIENTO EXCLUSIVO</div>
+                    <h2 class="glitch-title">Presentamos <span>NEXUS ERP</span></h2>
+                    <p class="launch-desc">El primer y único sistema administrativo multiempresa nativo en Venezuela diseñado para escalar las operaciones de grandes corporaciones y PYMES con inteligencia artificial integrada.</p>
+                    <ul class="launch-features">
+                        <li><i class="icon">✓</i> Gestión Multi-Sucursal en tiempo real</li>
+                        <li><i class="icon">✓</i> Arquitectura Cloud de alta seguridad</li>
+                        <li><i class="icon">✓</i> Facturación Electrónica Nativa</li>
+                    </ul>
+                    <a href="#contacto" class="btn-main cyber-btn" style="text-decoration: none; display: inline-block; margin-top: 2rem;">Solicitar Demo Gratuita</a>
+                </div>
+                <div class="launch-visual">
+                    <!-- Placeholder visual for the ERP dashboard -->
+                    <div class="erp-mockup">
+                        <div class="erp-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <div class="erp-search"></div>
+                        </div>
+                        <div class="erp-body">
+                            <div class="erp-sidebar"></div>
+                            <div class="erp-main">
+                                <div class="erp-card wide"></div>
+                                <div class="erp-card"></div>
+                                <div class="erp-card"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -255,9 +296,14 @@
             <div class="contact-grid">
                 <div class="contact-info reveal">
                     <div class="info-card hud-box">
-                        <i class="icon">📍</i>
-                        <h4>Sede Central</h4>
-                        <p>Silicon Hub, Sector 7G<br>Cyber City, Neo Earth</p>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem;">
+                            <i class="icon" style="margin: 0;">📍</i>
+                            <h4 style="margin: 0;">Sede Central</h4>
+                        </div>
+                        <p>Edificio Tecoteca<br>Av. Francisco de Miranda, Los Palos Grandes, Caracas</p>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7846.10548852936!2d-66.8459024259865!3d10.496508464296577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a59b20e79a01b%3A0x611267d82a15c181!2sEdificio%20Tecoteca!5e0!3m2!1ses!2sus!4v1778298861730!5m2!1ses!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                     </div>
                     <div class="info-card hud-box">
                         <i class="icon">✉️</i>
@@ -298,6 +344,41 @@
         </a>
         <p style="font-size: 0.9rem;">© 2026 NEXUS Technology. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- NEX-IA Chatbot Widget -->
+    <div class="chatbot-widget">
+        <div class="chat-toggle" id="chat-toggle">
+            <div class="toggle-glow"></div>
+            <img src="images/nexia-avatar.png" alt="NEX-IA Avatar" class="chat-avatar">
+            <span class="status-dot"></span>
+        </div>
+        
+        <div class="chat-panel hud-box" id="chat-panel">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <img src="images/nexia-avatar.png" alt="NEX-IA">
+                    <div>
+                        <h4>NEX-IA</h4>
+                        <span>Online</span>
+                    </div>
+                </div>
+                <button class="close-chat" id="close-chat">×</button>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages will be appended here via JS -->
+            </div>
+            
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Transmite un comando..." autocomplete="off">
+                <button id="send-chat" class="cyber-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="main.js"></script>
 </body>

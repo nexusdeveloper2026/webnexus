@@ -101,17 +101,17 @@ document.addEventListener('DOMContentLoaded', () => {
             radius: 150
         };
 
-        window.addEventListener('mousemove', function(event) {
+        window.addEventListener('mousemove', function (event) {
             mouse.x = event.x;
             mouse.y = event.y;
         });
 
-        window.addEventListener('mouseout', function() {
+        window.addEventListener('mouseout', function () {
             mouse.x = undefined;
             mouse.y = undefined;
         });
 
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             canvas.width = innerWidth;
             canvas.height = innerHeight;
             initParticles();
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Check collision with mouse
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
+                let distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < mouse.radius + this.size) {
                     if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         this.y -= 3;
                     }
                 }
-                
+
                 this.x += this.directionX;
                 this.y += this.directionY;
                 this.draw();
@@ -197,9 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let opacityValue = 1;
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
-                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                    
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+                        ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+
                     if (distance < (canvas.width / 7) * (canvas.height / 7)) {
                         opacityValue = 1 - (distance / 15000);
                         ctx.strokeStyle = `rgba(62, 180, 172, ${opacityValue})`;
@@ -222,11 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (codeBlock) {
         const htmlContent = codeBlock.innerHTML;
         codeBlock.innerHTML = '';
-        
+
         let i = 0;
         let isTag = false;
         let text = '';
-        
+
         // Add a cursor element
         const cursor = document.createElement('span');
         cursor.className = 'typewriter-cursor';
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         setTimeout(typeWriter, 10);
                         return;
                     }
-                    
+
                     text += char;
                     if (!isTag) {
                         codeBlock.innerHTML = text;
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const statusDiv = document.getElementById('form-status');
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            
+
             // Simulating network request
             submitBtn.disabled = true;
             submitBtn.innerText = 'Transmitiendo...';
@@ -283,13 +283,128 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = false;
                 submitBtn.innerText = 'Transmitir Mensaje';
                 statusDiv.className = 'form-status success';
-                statusDiv.innerText = '[✓] Paquete de datos recibido con éxito. Conexión establecida.';
-                
+                statusDiv.innerText = '[✓] Paquete de datos recibido con éxito. Muy pronto uno de nuestros ejecutivos te contactará.';
+
                 // Clear success message after 5 seconds
                 setTimeout(() => {
                     statusDiv.innerText = '';
                 }, 5000);
             }, 2000);
+        });
+    }
+
+    // 9. NEX-IA Chatbot Logic
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatPanel = document.getElementById('chat-panel');
+    const closeChat = document.getElementById('close-chat');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const sendChat = document.getElementById('send-chat');
+
+    let isFirstOpen = true;
+
+    // Build Knowledge Base from DOM
+    let knowledgeBase = {
+        services: [],
+        techs: [],
+        vision: ""
+    };
+
+    function buildKnowledgeBase() {
+        document.querySelectorAll('.service-card').forEach(card => {
+            const title = card.querySelector('h3')?.innerText;
+            if (title) knowledgeBase.services.push(title);
+        });
+
+        document.querySelectorAll('.tech-item span').forEach(span => {
+            if (span.innerText) knowledgeBase.techs.push(span.innerText);
+        });
+
+        const visionP = document.querySelector('.about-content p');
+        if (visionP) knowledgeBase.vision = visionP.innerText;
+
+        console.log('NEX-IA Knowledge Base Built:', knowledgeBase);
+    }
+
+    // Initialize knowledge
+    buildKnowledgeBase();
+
+    function toggleChat() {
+        chatPanel.classList.toggle('active');
+        if (chatPanel.classList.contains('active') && isFirstOpen) {
+            setTimeout(() => {
+                appendMessage('bot', 'Hola, soy NEX-IA. Mi sistema está completamente operativo. ¿Sobre qué aspecto tecnológico de NEXUS te gustaría conversar?');
+            }, 500);
+            isFirstOpen = false;
+        }
+    }
+
+    if (chatToggle) chatToggle.addEventListener('click', toggleChat);
+    if (closeChat) closeChat.addEventListener('click', () => chatPanel.classList.remove('active'));
+
+    function appendMessage(sender, text) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', sender === 'user' ? 'msg-user' : 'msg-bot');
+        msgDiv.innerText = text;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function handleSend() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Add user message
+        appendMessage('user', text);
+        chatInput.value = '';
+
+        // Simulate Bot Typing
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('message', 'msg-bot');
+        typingDiv.innerHTML = 'Analizando consulta<span class="typing-indicator">...</span>';
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        let dots = 0;
+        const typingInterval = setInterval(() => {
+            dots = (dots + 1) % 4;
+            typingDiv.querySelector('.typing-indicator').innerText = '.'.repeat(dots);
+        }, 300);
+
+        // Simulate Bot Response with dynamic DOM knowledge
+        setTimeout(() => {
+            clearInterval(typingInterval);
+            typingDiv.remove();
+
+            const lowerText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let response = "";
+
+            if (lowerText.match(/(hola|buenos|buenas|saludos|hey|que tal)/)) {
+                response = "¡Hola! ¿Sobre qué aspecto de NEXUS quieres conversar? (Servicios, Tecnologías, Visión...)";
+            } else if (lowerText.match(/(erp|sistema administrativo|multiempresa|nuevo producto|lanzamiento)/)) {
+                response = "¡Ah! Te refieres a nuestro producto estrella: NEXUS ERP. Es el único sistema administrativo multiempresa en Venezuela. Puedes ver más detalles en la sección de 'Lanzamiento Exclusivo' justo debajo del inicio.";
+            } else if (lowerText.match(/(servicios|que hacen|ofrecen)/)) {
+                const srv = knowledgeBase.services.join(', ');
+                response = srv ? `En NEXUS nos especializamos en: ${srv}.` : "Actualmente mi módulo de servicios se está actualizando.";
+            } else if (lowerText.match(/(tecnologias|nube|desarrollo|web|app|stack)/)) {
+                const tch = knowledgeBase.techs.join(', ');
+                response = tch ? `Nuestro ecosistema tecnológico dominante incluye: ${tch}.` : "Mis registros tecnológicos están sincronizándose.";
+            } else if (lowerText.match(/(vision|mision|nosotros|quienes son|empresa)/)) {
+                response = knowledgeBase.vision ? `Nuestra visión: ${knowledgeBase.vision}` : "Mi acceso a la información corporativa está restringido momentáneamente.";
+            } else if (lowerText.match(/(precio|costo|cotizar|contacto|hablar|asesor)/)) {
+                response = "Nuestras soluciones son diseñadas a la medida. Te invito a usar el formulario inferior para que un asesor especializado evalúe tu proyecto.";
+            } else {
+                response = "Mi base de conocimientos actual no tiene una respuesta precisa para eso. Por favor, utiliza el formulario de contacto para comunicarte directamente con un asesor especialista.";
+            }
+
+            appendMessage('bot', response);
+        }, 1200);
+    }
+
+    if (sendChat) sendChat.addEventListener('click', handleSend);
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
         });
     }
 });

@@ -2467,3 +2467,90 @@ section {
     line-height: 1.5;
 }
 
+/* =========================================
+   VIP CLIENT SECTION STYLING
+   ========================================= */
+.vip-gold {
+    color: #D4AF37;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.carousel-item.VIP-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(212, 175, 55, 0.03);
+    padding: 12px 28px;
+    border-radius: 100px;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.carousel-item.VIP-item:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1);
+}
+
+.vip-star {
+    font-size: 1.2rem;
+    color: #D4AF37;
+    animation: gold-pulse 2s infinite ease-in-out;
+}
+
+@keyframes gold-pulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* =========================================
+   SOUND CONTROL STYLING
+   ========================================= */
+.sound-control {
+    position: fixed;
+    bottom: 105px;
+    right: 38px;
+    width: 40px;
+    height: 40px;
+    background: rgba(10, 15, 25, 0.8);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    color: var(--text-muted);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+}
+
+.sound-control.active {
+    color: var(--primary);
+    border-color: rgba(62, 180, 172, 0.4);
+    box-shadow: 0 0 15px rgba(62, 180, 172, 0.2);
+}
+
+.sound-control:hover {
+    transform: scale(1.1);
+    background: rgba(62, 180, 172, 0.1);
+    color: var(--primary);
+}
+
+.sound-control svg {
+    width: 20px;
+    height: 20px;
+}
+
+.sound-control:not(.active) {
+    animation: sound-attention 2s infinite;
+}
+
+@keyframes sound-attention {
+    0% { box-shadow: 0 0 0 0 rgba(160, 174, 192, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(160, 174, 192, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(160, 174, 192, 0); }
+}
+

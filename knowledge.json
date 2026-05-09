@@ -1,0 +1,122 @@
+{
+  "company": {
+    "name": "NEXUS TECHNOLOGY",
+    "description": "NEXUS TECHNOLOGY es una organización en crecimiento dedicada al desarrollo de soluciones tecnológicas de vanguardia, especializada en la creación de ecosistemas digitales que unifican la información fragmentada de las empresas.",
+    "mission": "Construir el puente definitivo entre los desafíos operativos actuales de las organizaciones y las oportunidades estratégicas del futuro. Nos enfocamos en transformar el caos de los datos aislados en una arquitectura de unificación que permita a las empresas trabajar en perfecta sintonía.",
+    "vision": "Ser el referente global en el desarrollo de software de gestión, liderando el cambio hacia un mundo donde la tecnología y el ingenio humano converjan para generar valor infinito. Aspiramos a que cada organización deje de ser un conjunto de partes aisladas para convertirse en un organismo inteligente y sincronizado.",
+    "problem_statement": "La fragmentación de datos crea 'islas de información' donde el conocimiento se estanca y la agilidad operativa se pierde. NEXUS resuelve esta desconexión."
+  },
+  "products": [
+    {
+      "name": "NEXUS ERP multi empresa",
+      "etymology": "Del latín nexus: 'conexión', 'entrelazamiento'.",
+      "concept": "Más que un software de gestión, es una arquitectura de unificación diseñada para transformar el caos en flujos continuos de inteligencia de negocio.",
+      "architecture": {
+        "style": "Arquitectura de Microservicios (Inspirado en el isotipo cúbico)",
+        "scalability": "Permite añadir módulos de forma dinámica según el crecimiento.",
+        "api": "Núcleo abierto con API robusta para integraciones fluidas con terceros.",
+        "multi_company": "Diseñado para estructuras corporativas complejas. Gestión de múltiples razones sociales o unidades de negocio en tiempo real con un solo clic."
+      },
+      "design_philosophy": {
+        "colors": {
+          "Blue_Deep": "Evoca integridad y profesionalismo constante.",
+          "Turquoise_Aqua": "Representa la agilidad del software moderno."
+        },
+        "typography": "Sans Serif de peso variable para precisión y autoridad visual."
+      },
+      "pillars": [
+        "Innovación Continua (IA predictiva)",
+        "Precisión Técnica (Reportes exactos)",
+        "Excelencia en la Ejecución (99.9% Uptime)"
+      ],
+      "operational_scope": [
+        "Capital Humano y Talento (Nómina, reclutamiento)",
+        "Integridad y Conectividad (Comunicación alineada)",
+        "Cadena de Suministro y Almacén (Manejo preciso y escalable)",
+        "Inventarios y Proveedores (Tiempo real y alertas automáticas)",
+        "Compras (Automatización basada en demanda)",
+        "Ciclo Comercial y Logística (Ventas, CRM y entrega final)"
+      ],
+      "tech_stack": {
+        "backend": "Node.js 24 (Alto rendimiento)",
+        "database": "PostgreSQL 24 (Robusta y escalable)",
+        "security": "Encriptación de grado militar",
+        "frontend": "Diseño responsivo y minimalista",
+        "updates": "Despliegue continuo (CI/CD)"
+      },
+      "security": {
+        "protocols": [
+          "Cifrado AES-256 en reposo y tránsito (Grado militar)",
+          "TLS 1.3 para conexiones seguras",
+          "RBAC (Control de acceso basado en roles)",
+          "MFA (Autenticación Multifactor)",
+          "Blockchain-Ready Audit Logs (Huella inalterable)",
+          "IA Monitoring (Detección de patrones inusuales)"
+        ],
+        "disaster_recovery": "Respaldos Geodistribuidos y recuperación de alta disponibilidad."
+      },
+      "ai": {
+        "name": "NEX-IA",
+        "role": "Motor que materializa la convergencia entre tecnología e ingenio humano.",
+        "features": [
+          "Dosificación Inteligente (Filtrado contextual por rol)",
+          "Simplificación de Datos (Insights digeribles)",
+          "Reportes Predictivos (Proyecciones de ventas e inventarios)",
+          "Alertas en Tiempo Real (Anomalías presupuestarias o de inventario)"
+        ]
+      },
+      "ecommerce": {
+        "philosophy": "Soberanía Digital y Ventas sin Intermediarios.",
+        "benefits": [
+          "Cero Comisiones por Venta (100% de margen para el empresario)",
+          "Sin Cuotas Ocultas (Libertad de crecimiento)",
+          "Propiedad del Dato (Base de datos exclusiva de la empresa)",
+          "Alojamiento Cloud Descentralizado (Disponibilidad global constante)"
+        ]
+      },
+      "pros": [
+        "Visión Integral 360°",
+        "Implementación relámpago (Máximo 3 días)",
+        "Inteligencia Predictiva con NEX-IA",
+        "Crecimiento Sostenible y Modulable",
+        "Seguridad de Grado Militar",
+        "Omnipresencia Gerencial (Acceso web total)"
+      ],
+      "implementation": "Máximo 3 días hábiles (Despliegue relámpago).",
+      "cons": [
+        "Curva de Aprendizaje Inicial (Requiere capacitación)",
+        "Necesidad de Disciplina de Datos (Para reportes exactos)"
+      ],
+      "requirements": {
+        "server": "Intel Core i5 6th Gen, 8-16GB RAM, 256GB SSD",
+        "internet": "Fibra óptica 50Mbps+",
+        "fiscal_printers": ["SRP-812", "HKA-80", "DT-230", "PP9", "ACLAS PP9 PLUS", "P3100DL", "TALLY 1140", "PNP PF-SUNMI"]
+      }
+    }
+  ],
+  "comparison": {
+    "vs_traditional": [
+      {
+        "topic": "Arquitectura",
+        "traditional": "Escritorio/Local, sin acceso remoto real.",
+        "nexus": "Cloud-Native, acceso seguro desde cualquier dispositivo."
+      },
+      {
+        "topic": "Integración",
+        "traditional": "Islas de información (módulos fragmentados).",
+        "nexus": "Arquitectura de Unificación (datos entrelazados nativamente)."
+      },
+      {
+        "topic": "Análisis",
+        "traditional": "Reportes históricos y reactivos.",
+        "nexus": "Inteligencia Predictiva (NEX-IA) y proactiva."
+      },
+      {
+        "topic": "Multi-empresa",
+        "traditional": "Bases de datos y licencias separadas.",
+        "nexus": "Gestión centralizada de múltiples razones sociales con un clic."
+      }
+    ]
+  },
+  "conclusion": "NEXUS ERP es el sistema nervioso central que transforma un conjunto de partes aisladas en un organismo inteligente y sincronizado. El puente hacia las oportunidades del futuro."
+}

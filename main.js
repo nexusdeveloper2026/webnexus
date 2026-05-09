@@ -1,15 +1,92 @@
 // NEXUS Technology - Interactivity
 
-// 0. Preloader Logic
+// 0. Sound Management
+const SoundManager = {
+    // Usando Mixkit (URLs muy estables y de alta calidad)
+    hover: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
+    click: new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'),
+    notif: new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'),
+    typing: new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'), // Click digital para typing
+    muted: true,
+    
+    init() {
+        [this.hover, this.click, this.notif, this.typing].forEach(a => {
+            a.volume = 0.1;
+            a.load();
+        });
+        
+        // Desbloqueo proactivo por política de navegador
+        const unlockAudio = () => {
+            this.muted = false;
+            // Reproducir y pausar inmediatamente para "desbloquear" el contexto de audio
+            const silentPlay = this.hover.play();
+            if (silentPlay !== undefined) {
+                silentPlay.then(() => {
+                    this.hover.pause();
+                    this.hover.currentTime = 0;
+                }).catch(() => {});
+            }
+            
+            const btn = document.getElementById('sound-toggle');
+            if (btn) btn.classList.add('active');
+            
+            // Remover listeners una vez desbloqueado
+            ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => 
+                window.removeEventListener(evt, unlockAudio)
+            );
+        };
+
+        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt => 
+            window.addEventListener(evt, unlockAudio)
+        );
+
+        // Manual toggle
+        const toggleBtn = document.getElementById('sound-toggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.muted = !this.muted;
+                toggleBtn.classList.toggle('active', !this.muted);
+                if (!this.muted) this.play('click');
+            });
+        }
+    },
+    
+    play(type) {
+        if (this.muted) return;
+        const sound = this[type];
+        if (sound) {
+            const playPromise = sound.cloneNode(true).play(); // cloneNode permite superposición de sonidos rápidos
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+            }
+        }
+    }
+};
+
+SoundManager.init();
+
+// 0.1 Preloader Logic
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
+    const progressBar = document.querySelector('.progress-bar');
+    const typingSpan = document.querySelector('.preloader-text .typing');
+    
     if (preloader) {
+        // Simular progreso de carga automático
         setTimeout(() => {
-            preloader.classList.add('fade-out');
+            if (progressBar) progressBar.style.width = '100%';
+            if (typingSpan) typingSpan.innerText = 'SISTEMA INICIALIZADO';
+            
             setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 800); // Wait for fade out transition
-        }, 2500); // Increased to 2.5 seconds
+                preloader.classList.add('fade-out');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    // Iniciar la animación de escritura automáticamente
+                    if (window.startHeroTypewriter) window.startHeroTypewriter();
+                }, 800);
+            }, 500);
+        }, 1800);
     }
 });
 
@@ -59,6 +136,19 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => {
         observer.observe(el);
     });
+
+    // 3. UI Sounds
+    const attachSounds = () => {
+        const soundElements = document.querySelectorAll('.cyber-btn, .nav-links a, .footer-links-group a, .whatsapp-float, .chat-toggle, .btn-main, .btn-ghost');
+        soundElements.forEach(el => {
+            el.addEventListener('mouseenter', () => SoundManager.play('hover'));
+            el.addEventListener('click', () => SoundManager.play('click'));
+        });
+    };
+    attachSounds();
+
+    // Re-attach sounds for dynamically loaded elements if needed (e.g. Chatbot)
+    window.attachSounds = attachSounds;
 
     // 2. Smart Navbar: Hide on scroll down, show on scroll up + mouse hover near top
     const navbar = document.getElementById('navbar');
@@ -457,36 +547,38 @@ document.addEventListener('DOMContentLoaded', () => {
         cursor.className = 'typewriter-cursor';
         codeBlock.parentNode.appendChild(cursor);
 
-        // Delay start for dramatic effect
-        setTimeout(() => {
-            function typeWriter() {
-                if (i < htmlContent.length) {
-                    let char = htmlContent.charAt(i);
-                    if (char === '<') isTag = true;
-                    if (char === '>') {
-                        isTag = false;
-                        text += char;
-                        i++;
-                        codeBlock.innerHTML = text;
-                        setTimeout(typeWriter, 10);
-                        return;
-                    }
-
+        function typeWriter() {
+            if (i < htmlContent.length) {
+                let char = htmlContent.charAt(i);
+                if (char === '<') isTag = true;
+                if (char === '>') {
+                    isTag = false;
                     text += char;
-                    if (!isTag) {
-                        codeBlock.innerHTML = text;
-                        setTimeout(typeWriter, Math.random() * 30 + 10); // Random typing speed
-                    } else {
-                        setTimeout(typeWriter, 0); // Fast forward through tags
-                    }
                     i++;
-                } else {
-                    // Remove cursor after finished or keep it blinking
-                    // cursor.remove();
+                    codeBlock.innerHTML = text;
+                    setTimeout(typeWriter, 10);
+                    return;
                 }
+
+                text += char;
+                if (!isTag) {
+                    codeBlock.innerHTML = text;
+                    // Play typing sound for non-space characters
+                    if (char !== ' ' && char !== '\n') {
+                        SoundManager.play('typing');
+                    }
+                    setTimeout(typeWriter, Math.random() * 30 + 10); // Random typing speed
+                } else {
+                    setTimeout(typeWriter, 0); // Fast forward through tags
+                }
+                i++;
             }
-            typeWriter();
-        }, 1000);
+        }
+
+        // Export function to be called from Preloader
+        window.startHeroTypewriter = () => {
+            setTimeout(typeWriter, 500);
+        };
     }
 
     // 8. Contact Form Handling
@@ -528,37 +620,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isFirstOpen = true;
 
-    // Build Knowledge Base from DOM
-    let knowledgeBase = {
-        services: [],
-        techs: [],
-        vision: ""
-    };
+    // Build Knowledge Base from JSON file
+    let nexusData = null;
 
-    function buildKnowledgeBase() {
-        document.querySelectorAll('.service-card').forEach(card => {
-            const title = card.querySelector('h3')?.innerText;
-            if (title) knowledgeBase.services.push(title);
-        });
-
-        document.querySelectorAll('.tech-item span').forEach(span => {
-            if (span.innerText) knowledgeBase.techs.push(span.innerText);
-        });
-
-        const visionP = document.querySelector('.about-content p');
-        if (visionP) knowledgeBase.vision = visionP.innerText;
-
-        console.log('NEX-IA Knowledge Base Built:', knowledgeBase);
+    async function loadNexusKnowledge() {
+        try {
+            const response = await fetch('knowledge.json');
+            nexusData = await response.json();
+            console.log('NEX-IA Knowledge Sincronizado:', nexusData);
+        } catch (error) {
+            console.error('Error cargando base de conocimientos:', error);
+            // Fallback to basic info if JSON fails
+            nexusData = {
+                company: { name: "NEXUS Technology" },
+                products: [{ name: "NEXUS ERP" }]
+            };
+        }
     }
 
-    // Initialize knowledge
-    buildKnowledgeBase();
+    // Initialize knowledge loading
+    loadNexusKnowledge();
 
     function toggleChat() {
         chatPanel.classList.toggle('active');
         if (chatPanel.classList.contains('active') && isFirstOpen) {
             setTimeout(() => {
-                appendMessage('bot', 'Hola, soy NEX-IA. Mi sistema está completamente operativo. ¿Sobre qué aspecto tecnológico de NEXUS te gustaría conversar?');
+                appendMessage('bot', 'Hola, soy NEX-IA. Mi núcleo de datos ha sido actualizado con el archivo knowledge.json. ¿Qué información técnica o comercial necesitas de NEXUS?');
             }, 500);
             isFirstOpen = false;
         }
@@ -570,23 +657,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function appendMessage(sender, text) {
         const msgDiv = document.createElement('div');
         msgDiv.classList.add('message', sender === 'user' ? 'msg-user' : 'msg-bot');
-        msgDiv.innerText = text;
+        msgDiv.innerHTML = text; // Permite HTML para enlaces y botones
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Play notification sound for bot response
+        if (sender === 'bot') {
+            SoundManager.play('notif');
+        }
     }
 
     function handleSend() {
         const text = chatInput.value.trim();
-        if (!text) return;
+        if (!text || !nexusData) return;
 
-        // Add user message
         appendMessage('user', text);
         chatInput.value = '';
 
-        // Simulate Bot Typing
         const typingDiv = document.createElement('div');
         typingDiv.classList.add('message', 'msg-bot');
-        typingDiv.innerHTML = 'Analizando consulta<span class="typing-indicator">...</span>';
+        typingDiv.innerHTML = 'Conectando con canales oficiales<span class="typing-indicator">...</span>';
         chatMessages.appendChild(typingDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -596,30 +686,99 @@ document.addEventListener('DOMContentLoaded', () => {
             typingDiv.querySelector('.typing-indicator').innerText = '.'.repeat(dots);
         }, 300);
 
-        // Simulate Bot Response with dynamic DOM knowledge
         setTimeout(() => {
             clearInterval(typingInterval);
             typingDiv.remove();
 
             const lowerText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             let response = "";
+            const erp = nexusData.products[0];
+            const waLink = "https://wa.me/584121234567?text=Hola%20equipo%20de%20NEXUS%20Technology%2C%20deseo%20hablar%20con%20un%20asesor";
 
+            // 1. GREETINGS & IDENTITY
             if (lowerText.match(/(hola|buenos|buenas|saludos|hey|que tal)/)) {
-                response = "¡Hola! ¿Sobre qué aspecto de NEXUS quieres conversar? (Servicios, Tecnologías, Visión...)";
-            } else if (lowerText.match(/(erp|sistema administrativo|multiempresa|nuevo producto|lanzamiento)/)) {
-                response = "¡Ah! Te refieres a nuestro producto estrella: NEXUS ERP. Es el único sistema administrativo multiempresa en Venezuela. Puedes ver más detalles en la sección de 'Lanzamiento Exclusivo' justo debajo del inicio.";
-            } else if (lowerText.match(/(servicios|que hacen|ofrecen)/)) {
-                const srv = knowledgeBase.services.join(', ');
-                response = srv ? `En NEXUS nos especializamos en: ${srv}.` : "Actualmente mi módulo de servicios se está actualizando.";
-            } else if (lowerText.match(/(tecnologias|nube|desarrollo|web|app|stack)/)) {
-                const tch = knowledgeBase.techs.join(', ');
-                response = tch ? `Nuestro ecosistema tecnológico dominante incluye: ${tch}.` : "Mis registros tecnológicos están sincronizándose.";
-            } else if (lowerText.match(/(vision|mision|nosotros|quienes son|empresa)/)) {
-                response = knowledgeBase.vision ? `Nuestra visión: ${knowledgeBase.vision}` : "Mi acceso a la información corporativa está restringido momentáneamente.";
-            } else if (lowerText.match(/(precio|costo|cotizar|contacto|hablar|asesor)/)) {
-                response = "Nuestras soluciones son diseñadas a la medida. Te invito a usar el formulario inferior para que un asesor especializado evalúe tu proyecto.";
+                response = `¡Hola! Soy NEX-IA, el sistema experto de ${nexusData.company.name}. He analizado el White Paper de NEXUS ERP al 100%. ¿Qué área técnica, operativa o estratégica deseas explorar?`;
+            } 
+            // 1.5 CONTACT & SALES (PRIORITY)
+            else if (lowerText.match(/(hablar|comercial|ventas|soporte|asesor|comunicarme|ayuda humana|whatsapp|telefono|contacto|comprar|vendedor)/)) {
+                response = `¡Entendido! Para una atención personalizada, puedes comunicarte directamente con nuestro equipo de Ventas y Soporte vía WhatsApp:<br><br><a href="${waLink}" target="_blank" class="btn-main cyber-btn" style="text-decoration:none; display:inline-block; padding: 10px 20px; font-size: 0.9rem;">Chatear en WhatsApp</a>`;
+            }
+            // 2. ETYMOLOGY & PHILOSOPHY
+            else if (lowerText.match(/(que significa|que es nexus|significado|nombre|etimologia|raiz)/)) {
+                response = `El nombre NEXUS proviene del latín: "${erp.etymology}". ${nexusData.company.description} Nuestra meta es ser el puente hacia el futuro.`;
+            }
+            // 3. ERP GENERAL & CONCEPT
+            else if (lowerText.match(/(que es nexus erp|para que sirve|explicame el erp|con que se come)/)) {
+                response = `NEXUS ERP es ${erp.concept}. Se basa en una ${erp.architecture.style} y está diseñado para unificar visiones con resultados.`;
+            }
+            // 4. ARCHITECTURE & MODULARITY
+            else if (lowerText.match(/(arquitectura|microservicios|modular|escalable|api|crecimiento|isotipo|cubo)/)) {
+                response = `Nuestra arquitectura está inspirada en nuestro isotipo cúbico fragmentado. ${erp.architecture.scalability} Además, el "espacio abierto" en nuestro centro simboliza la transparencia de nuestro ${erp.architecture.api}.`;
+            }
+            // 5. MULTI-COMPANY
+            else if (lowerText.match(/(multiempresa|varias empresas|multi-empresa|razones sociales|holding|sucursales)/)) {
+                response = `NEXUS ERP es el único sistema en Venezuela con una arquitectura ${erp.architecture.multi_company}. Controlas todo tu holding en tiempo real con un solo clic.`;
+            }
+            // 6. UI/UX & DESIGN
+            else if (lowerText.match(/(colores|diseño|ui|ux|interfaz|azul|turquesa|tipografia|fuente)/)) {
+                response = `Nuestra UI utiliza ${erp.design_philosophy.colors.Blue_Deep} y ${erp.design_philosophy.colors.Turquoise_Aqua}. Usamos tipografía Sans Serif de peso variable para garantizar precisión visual.`;
+            }
+            // 7. PILLARS & VALUES
+            else if (lowerText.match(/(pilares|valores|innovacion|precision|excelencia)/)) {
+                response = `Nos basamos en tres pilares: ${erp.pillars.join(', ')}. Cada línea de código está optimizada para ofrecer ángulos exactos en tus reportes.`;
+            }
+            // 8. DATABASE & SOVEREIGNTY
+            else if (lowerText.match(/(base de datos|database|postgresql|donde se guardan|mis datos|dueno de los datos)/)) {
+                response = `Utilizamos ${erp.tech_stack.database}. Garantizamos la Soberanía Total: la base de datos pertenece exclusivamente a tu empresa. El puente hacia el futuro no tiene peajes.`;
+            }
+            // 9. SECURITY & BLINDAJE
+            else if (lowerText.match(/(seguridad|blindaje|cifrado|encriptacion|aes|tls|multifactor|mfa|acceso|auditoria|blockchain)/)) {
+                response = `Protocolos de blindaje: ${erp.security.protocols.join('. ')}. Además, contamos con ${erp.security.disaster_recovery}.`;
+            }
+            // 10. AI (NEX-IA)
+            else if (lowerText.match(/(nex-ia|inteligencia artificial|ia|predictivo|cerebro|automatizado)/)) {
+                response = `${erp.ai.name} es el cerebro del sistema. ${erp.ai.role} Sus funciones incluyen: ${erp.ai.features.join(', ')}.`;
+            }
+            // 11. E-COMMERCE
+            else if (lowerText.match(/(e-commerce|tienda|ventas online|soberania digital|comisiones|cuotas|marketplace)/)) {
+                response = `Nuestro E-commerce Nativo ofrece ${erp.ecommerce.philosophy}. Beneficios: ${erp.ecommerce.benefits.join('. ')}.`;
+            }
+            // 12. OPERATIONAL SCOPE (HR, SUPPLY, INVENTORY)
+            else if (lowerText.match(/(capital humano|talento|personal|nomina|trabajadores|empleados)/)) {
+                response = `Gestionamos el ciclo de vida del colaborador: ${erp.operational_scope[0]}. Aseguramos integridad en beneficios y desempeño.`;
+            } else if (lowerText.match(/(inventario|almacen|existencias|reabastecimiento|proveedores)/)) {
+                response = `Control de existencias en tiempo real con ${erp.operational_scope[3]}. Alertas automáticas para una gestión sin quiebres.`;
+            } else if (lowerText.match(/(compras|pedidos|ordenes de compra)/)) {
+                response = `${erp.operational_scope[4]}. Optimizamos costos mediante inteligencia de datos.`;
+            } else if (lowerText.match(/(logistica|ventas|crm|comercial|entrega)/)) {
+                response = `Ciclo Comercial: ${erp.operational_scope[5]}. Incluye gestión de embudos de venta y CRM integrado.`;
+            }
+            // 13. TECH STACK (NODE, CI/CD, POSTGRES)
+            else if (lowerText.match(/(tecnologia|stack|node|ci\/cd|minimalista|responsivo)/)) {
+                response = `Stack NEXUS: Backend en ${erp.tech_stack.backend}, DB en ${erp.tech_stack.database}, ${erp.tech_stack.security} y ${erp.tech_stack.updates}.`;
+            }
+            // 14. COMPARISON
+            else if (lowerText.match(/(comparativa|tradicional|diferencia|vs|convencional|generacional)/)) {
+                const comp = nexusData.comparison.vs_traditional;
+                response = `Diferencias clave: 1. ${comp[0].topic} (${comp[0].nexus}). 2. ${comp[1].topic} (${comp[1].nexus}). 3. ${comp[2].topic} (${comp[2].nexus}). NEXUS es un salto generacional.`;
+            }
+            // 15. REQUIREMENTS & HARDWARE
+            else if (lowerText.match(/(requisitos|servidor|hardware|i5|ram|ssd|internet|fibra|impresora|fiscal|equipo|caja)/)) {
+                response = `Requerimientos Mínimos: Servidor (${erp.requirements.server}), Equipos de Caja (i3, 8GB RAM, Win10 Pro), Internet (${erp.requirements.internet}) e impresoras fiscales como: ${erp.requirements.fiscal_printers.slice(0, 5).join(', ')}...`;
+            }
+            // 15.5 IMPLEMENTATION TIME
+            else if (lowerText.match(/(tiempo|tarda|dias|implementacion|instalacion|demora)/)) {
+                response = `Nuestra arquitectura de unificación permite una **Implementación Relámpago**: tu sistema estará operativo en un **máximo de 3 días hábiles**, incluyendo configuración y capacitación inicial.`;
+            }
+            // 16. MISSION / VISION
+            else if (lowerText.match(/(mision|vision|objetivo|referente|caos)/)) {
+                response = `Misión: ${nexusData.company.mission}. Visión: ${nexusData.company.vision}`;
+            }
+            // 17. PROS / CONS / TRAINING
+            else if (lowerText.match(/(ventajas|beneficios|desventajas|contras|capacitacion|aprender)/)) {
+                response = `Ventajas: ${erp.pros.join(', ')}. Nota: Requiere ${erp.cons[0]} para dominar herramientas como NEX-IA.`;
             } else {
-                response = "Mi base de conocimientos actual no tiene una respuesta precisa para eso. Por favor, utiliza el formulario de contacto para comunicarte directamente con un asesor especialista.";
+                response = `${nexusData.conclusion} ¿Hay alguna sección específica del White Paper (Seguridad, IA, E-commerce, Hardware) que quieras profundizar?`;
             }
 
             appendMessage('bot', response);

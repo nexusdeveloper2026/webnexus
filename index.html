@@ -1,58 +1,305 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NEXUS Technology - Soluciones de software de vanguardia">
-    <title>NEXUS Technology | Future of Web</title>
+    <meta name="description" content="NEXUS Technology - Soluciones de software de vanguardia e innovación digital">
+    <title>NEXUS Technology</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="tech-grid-bg"></div>
     <div class="glow-bg"></div>
-    
-    <nav class="navbar">
-        <div class="logo">NEXUS<span>.</span></div>
+
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            <img src="images/logo.png" alt="NEXUS Technology" class="logo-img">
+        </a>
         <div class="nav-links">
             <a href="#inicio" class="active">Inicio</a>
+            <a href="#nosotros">Nosotros</a>
             <a href="#servicios">Servicios</a>
-            <a href="#proyectos">Proyectos</a>
-            <a href="#contacto" class="btn-primary">Contacto</a>
+            <a href="#tecnologias">Tecnologías</a>
+            <a href="#contacto" class="btn-contact">Contáctanos</a>
         </div>
     </nav>
 
     <main>
         <section id="inicio" class="hero">
-            <div class="hero-content">
-                <div class="badge">NEXUS TECHNOLOGY 2026</div>
-                <h1>Elevando el estándar de la <span>Tecnología Digital</span></h1>
-                <p>Creamos experiencias web inmersivas, rápidas y visualmente impactantes utilizando Node.js y las últimas tecnologías del mercado.</p>
+            <div class="hero-content reveal">
+
+                <h1>Definiendo el <span>Futuro Digital</span></h1>
+                <p>En NEXUS, transformamos ideas complejas en soluciones digitales de alto impacto. Innovación,
+                    velocidad y diseño premium para empresas que miran hacia adelante.</p>
                 <div class="hero-btns">
-                    <button class="btn-main">Empezar ahora</button>
-                    <button class="btn-ghost">Ver Demo</button>
+                    <a href="#contacto" class="btn-main cyber-btn" style="text-decoration: none; display: inline-block;">Contácta a un Asesor</a>
+                    <a href="#servicios" class="btn-ghost cyber-btn" style="text-decoration: none; display: inline-block;">Descubre Nuestras Soluciones</a>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="glass-card">
-                    <div class="card-glow"></div>
-                    <div class="card-content">
-                        <div class="code-header">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                        </div>
-                        <pre><code><span class="keyword">const</span> nexus = <span class="string">'innovation'</span>;
-<span class="keyword">function</span> <span class="function">buildFuture</span>() {
-  <span class="keyword">return</span> <span class="variable">nexus</span>.<span class="method">evolve</span>();
+            <div class="hero-visual reveal">
+                <div class="visual-orb"></div>
+                <img src="images/robot.png" alt="Nexus AI Robot" class="robot-mascot">
+                <div class="glass-card hud-box">
+                    <div class="scanner"><div class="scanner-line"></div></div>
+                    <div class="code-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <pre><code id="typewriter-code"><span class="keyword">const</span> nexus = {
+  Nuestra Visión: <span class="string">'Innovar para el Futuro'</span>,
+  Nuestra Misión: <span class="string">'Ecosistemas escalables'</span>,
+  Nuestros Valores: <span class="string">'Excelencia y calidad'</span>,
+  status: <span class="variable">true</span>
+};
+
+<span class="function">async function</span> <span class="function">evolve</span>() {
+  <span class="keyword">await</span> nexus.<span class="method">launch</span>();
 }</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios">
+            <div class="section-header reveal">
+                <div class="badge">Nuestros Servicios</div>
+                <h2>Soluciones de <span>Vanguardia</span></h2>
+                <p>Desarrollamos ecosistemas digitales escalables con las tecnologías más modernas del mercado.</p>
+            </div>
+
+            <div class="grid-services">
+                <div class="service-card hud-box reveal">
+                    <div class="service-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3EB4AC" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Arquitectura Web</h3>
+                    <p>Sistemas robustos y escalables diseñados para soportar el crecimiento de tu empresa.</p>
+                </div>
+                <div class="service-card hud-box reveal">
+                    <div class="service-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3EB4AC" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="22" y1="12" x2="18" y2="12"></line>
+                            <line x1="6" y1="12" x2="2" y2="12"></line>
+                            <line x1="12" y1="6" x2="12" y2="2"></line>
+                            <line x1="12" y1="22" x2="12" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3>Innovación UI/UX</h3>
+                    <p>Experiencias inmersivas que cautivan a tus usuarios desde el primer segundo.</p>
+                </div>
+                <div class="service-card hud-box reveal">
+                    <div class="service-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3EB4AC" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Infraestructura en la nube optimizada para alta disponibilidad y rendimiento.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="nosotros">
+            <div class="about-grid">
+                <div class="about-content reveal">
+                    <div class="badge">Nuestra Visión</div>
+                    <h2>Construyendo la <br><span>Infraestructura del Mañana</span></h2>
+                    <p>No somos solo una agencia de desarrollo; somos arquitectos de ecosistemas digitales. Diseñamos
+                        soluciones preparadas para escalar, integrando innovación continua y prácticas de ingeniería de
+                        nivel empresarial.</p>
+                    <p>Nuestro compromiso es acelerar el crecimiento de tu negocio mediante tecnología resiliente y
+                        diseño centrado en el ser humano.</p>
+
+                    <div class="about-stats-mini">
+                        <div class="stat-mini">
+                            <strong>10x</strong>
+                            <span>Escalabilidad</span>
+                        </div>
+                        <div class="stat-mini">
+                            <strong>100%</strong>
+                            <span>A Medida</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual reveal" style="padding: 2rem;">
+                    <div class="glass-card" style="transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);">
+                        <div class="code-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                        </div>
+                        <pre><code><span class="keyword">class</span> <span class="function">EnterpriseSystem</span> {
+  <span class="function">constructor</span>() {
+    <span class="variable">this</span>.architecture = <span class="string">'Microservices'</span>;
+    <span class="variable">this</span>.resilience = <span class="keyword">Infinity</span>;
+  }
+  
+  <span class="function">deploy</span>() {
+    <span class="keyword">return</span> <span class="string">'Success: Zero Downtime'</span>;
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tecnologias">
+            <div class="section-header reveal">
+                <div class="badge">Ecosistema Tecnológico</div>
+                <h2>Dominio <span>Full-Stack</span></h2>
+                <p>Utilizamos las herramientas más potentes del mercado para garantizar rendimiento, seguridad y
+                    mantenibilidad a largo plazo.</p>
+            </div>
+
+            <div class="tech-container reveal">
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h-2v-4H9v-2h2V8h2v8zm4 0h-2V8h2v8z" />
+                        </svg>
+                        <span>Node.js</span>
+                    </div>
+                    <div class="tech-item">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm0-4v2h2V7h-2z" />
+                        </svg>
+                        <span>React / Next</span>
+                    </div>
+                    <div class="tech-item">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                        </svg>
+                        <span>Cloud Native</span>
+                    </div>
+                    <div class="tech-item">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                        </svg>
+                        <span>AI Integration</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="metricas" class="metrics-section">
+            <div class="metrics-grid">
+                <div class="metric-card reveal">
+                    <div class="number counter" data-target="99.9">0</div><span
+                        style="font-size: 3rem; color: var(--primary); font-weight: 800;">%</span>
+                    <div class="label">Uptime Garantizado</div>
+                </div>
+                <div class="metric-card reveal">
+                    <div class="number counter" data-target="50">0</div><span
+                        style="font-size: 3rem; color: var(--primary); font-weight: 800;">+</span>
+                    <div class="label">Sistemas Desplegados</div>
+                </div>
+                <div class="metric-card reveal">
+                    <div class="number counter" data-target="24">0</div><span
+                        style="font-size: 3rem; color: var(--primary); font-weight: 800;">/7</span>
+                    <div class="label">Soporte Técnico</div>
+                </div>
+                <div class="metric-card reveal">
+                    <div class="number counter" data-target="100">0</div><span
+                        style="font-size: 3rem; color: var(--primary); font-weight: 800;">%</span>
+                    <div class="label">Código Optimizado</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="innovacion" style="background: rgba(43, 74, 140, 0.03);">
+            <div class="hero" style="height: auto; padding: 80px 0;">
+                <div class="hero-visual reveal" style="order: 2;">
+                    <div class="visual-orb"
+                        style="background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);"></div>
+                    <div class="glass-card" style="transform: none; border-color: var(--secondary);">
+                        <h3 style="margin-bottom: 1rem; color: var(--primary);">NEXUS Core v2.0</h3>
+                        <p style="font-size: 0.9rem;">Integración de IA y analítica predictiva para optimizar procesos
+                            empresariales complejos.</p>
+                    </div>
+                </div>
+                <div class="hero-content reveal" style="order: 1;">
+                    <div class="badge"
+                        style="background: rgba(43, 74, 140, 0.1); border-color: rgba(43, 74, 140, 0.2); color: var(--secondary);">
+                        I+D Continua</div>
+                    <h2>Impulsando la <span>Revolución</span></h2>
+                    <p>No solo creamos software; construimos el motor tecnológico que permite a tu negocio escalar sin
+                        límites. La innovación está en nuestro ADN.</p>
+                </div>
+            </div>
+        <section id="contacto" class="contact-section">
+            <div class="section-header reveal">
+                <div class="badge">Iniciemos el Sistema</div>
+                <h2>Conecta con el <span>Futuro</span></h2>
+                <p>Nuestros ingenieros y estrategas están listos para arquitectar tu próxima ventaja competitiva.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <div class="info-card hud-box">
+                        <i class="icon">📍</i>
+                        <h4>Sede Central</h4>
+                        <p>Silicon Hub, Sector 7G<br>Cyber City, Neo Earth</p>
+                    </div>
+                    <div class="info-card hud-box">
+                        <i class="icon">✉️</i>
+                        <h4>Protocolo de Comunicación</h4>
+                        <p>hello@nexus.tech<br>support@nexus.tech</p>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper reveal">
+                    <div class="glass-card hud-box">
+                        <form id="contact-form" class="cyber-form">
+                            <div class="form-group">
+                                <label for="name">Identidad (Nombre)</label>
+                                <input type="text" id="name" required placeholder="Ej. Alex Vance">
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Enlace de Retorno (Email)</label>
+                                <input type="email" id="email" required placeholder="alex@empresa.com">
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Paquete de Datos (Mensaje)</label>
+                                <textarea id="message" rows="4" required placeholder="Describe los parámetros de tu proyecto..."></textarea>
+                                <div class="input-line"></div>
+                            </div>
+                            <button type="submit" class="btn-main cyber-btn w-100">Transmitir Mensaje</button>
+                            <div id="form-status" class="form-status"></div>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <footer style="padding: 50px 8%; border-top: 1px solid var(--glass-border); text-align: center;">
+        <a href="#" class="logo" style="justify-content: center; margin-bottom: 1.5rem; text-decoration: none;">
+            <img src="images/logo.png" alt="NEXUS Technology" class="logo-img">
+        </a>
+        <p style="font-size: 0.9rem;">© 2026 NEXUS Technology. Todos los derechos reservados.</p>
+    </footer>
+
     <script type="module" src="main.js"></script>
 </body>
+
 </html>

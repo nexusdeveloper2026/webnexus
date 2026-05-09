@@ -67,7 +67,7 @@ const SoundManager = {
 SoundManager.init();
 
 // 0.1 Preloader Logic
-window.addEventListener('load', () => {
+setTimeout(() => {
     const preloader = document.getElementById('preloader');
     const progressBar = document.querySelector('.progress-bar');
     const typingSpan = document.querySelector('.preloader-text .typing');
@@ -117,7 +117,7 @@ window.addEventListener('load', () => {
     });
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
+setTimeout(() => {
     // 1. Reveal animations on scroll
     const observerOptions = {
         threshold: 0.1,
@@ -541,11 +541,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let i = 0;
         let isTag = false;
         let text = '';
-
-        // Add a cursor element
-        const cursor = document.createElement('span');
-        cursor.className = 'typewriter-cursor';
-        codeBlock.parentNode.appendChild(cursor);
 
         function typeWriter() {
             if (i < htmlContent.length) {

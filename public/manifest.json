@@ -1,0 +1,16 @@
+{
+  "name": "NEXUS Technology | ERP & Software",
+  "short_name": "NEXUS",
+  "description": "El sistema administrativo más avanzado de Venezuela con IA integrada.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05070a",
+  "theme_color": "#3EB4AC",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

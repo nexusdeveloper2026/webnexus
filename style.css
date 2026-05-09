@@ -1226,82 +1226,59 @@ section {
     font-style: normal;
 }
 
-/* ERP Mockup Visual */
-.launch-visual {
-    flex: 1;
-    z-index: 5;
+/* ERP Screenshot */
+.erp-screenshot {
+    width: 100%;
+    max-width: 520px;
+    border-radius: 12px;
+    border: 1px solid rgba(62, 180, 172, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(62, 180, 172, 0.25);
+    transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.launch-container:hover .erp-screenshot {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(62, 180, 172, 0.4);
+}
+
+/* Certification Badges */
+.cert-badges {
     display: flex;
     justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(62, 180, 172, 0.2);
 }
 
-.erp-mockup {
-    width: 100%;
-    max-width: 500px;
-    height: 350px;
-    background: rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
+.cert-badge {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(62, 180, 172, 0.3);
-    transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
-    transition: var(--transition);
-}
-
-.launch-container:hover .erp-mockup {
-    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-}
-
-.erp-header {
-    height: 40px;
-    background: rgba(255,255,255,0.05);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    display: flex;
     align-items: center;
-    padding: 0 15px;
-    gap: 8px;
+    gap: 6px;
+    opacity: 0.85;
+    transition: opacity 0.3s, transform 0.3s;
 }
 
-.erp-search {
-    width: 150px;
-    height: 20px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 10px;
-    margin-left: auto;
+.cert-badge:hover {
+    opacity: 1;
+    transform: translateY(-4px);
 }
 
-.erp-body {
-    display: flex;
-    flex: 1;
+.cert-badge img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(62, 180, 172, 0.4));
 }
 
-.erp-sidebar {
-    width: 80px;
-    background: rgba(255,255,255,0.02);
-    border-right: 1px solid rgba(255,255,255,0.05);
-}
-
-.erp-main {
-    flex: 1;
-    padding: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 15px;
-}
-
-.erp-card {
-    background: rgba(62, 180, 172, 0.1);
-    border: 1px solid rgba(62, 180, 172, 0.2);
-    border-radius: 8px;
-}
-
-.erp-card.wide {
-    grid-column: span 2;
-    height: 80px;
-    background: rgba(43, 74, 140, 0.3);
-    border-color: rgba(43, 74, 140, 0.5);
+.cert-badge span {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: 600;
 }
 
 @media (max-width: 992px) {
@@ -1309,7 +1286,8 @@ section {
         flex-direction: column;
         padding: 3rem 2rem;
     }
-    .erp-mockup {
+    .erp-screenshot {
         transform: none;
+        max-width: 100%;
     }
 }

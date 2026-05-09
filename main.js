@@ -1,5 +1,45 @@
 // NEXUS Technology - Interactivity
 
+// 0. Preloader Logic
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 800); // Wait for fade out transition
+        }, 2500); // Increased to 2.5 seconds
+    }
+});
+
+// Cookie Consent Logic
+(function() {
+    const banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    // Show banner if consent not yet given
+    if (!localStorage.getItem('nexus_cookie_consent')) {
+        setTimeout(() => banner.classList.remove('hidden'), 2000);
+    } else {
+        banner.style.display = 'none';
+    }
+
+    const dismiss = (accepted) => {
+        localStorage.setItem('nexus_cookie_consent', accepted ? 'accepted' : 'rejected');
+        banner.classList.add('hidden');
+        setTimeout(() => banner.style.display = 'none', 500);
+    };
+
+    document.getElementById('cookie-accept')?.addEventListener('click', () => dismiss(true));
+    document.getElementById('cookie-reject')?.addEventListener('click', () => dismiss(false));
+    document.getElementById('cookie-settings-btn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        banner.style.display = '';
+        setTimeout(() => banner.classList.remove('hidden'), 10);
+    });
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Reveal animations on scroll
     const observerOptions = {
@@ -20,47 +60,210 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // 2. Navbar effect on scroll
+    // 2. Smart Navbar: Hide on scroll down, show on scroll up + mouse hover near top
     const navbar = document.getElementById('navbar');
     if (navbar) {
+        let lastScrollY = window.scrollY;
+        let isNavbarHidden = false;
+
+        const hideNavbar = () => {
+            navbar.classList.add('nav-hidden');
+            isNavbarHidden = true;
+        };
+
+        const showNavbar = () => {
+            navbar.classList.remove('nav-hidden');
+            isNavbarHidden = false;
+        };
+
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY < 80) {
+                // Always show near the top of the page
+                showNavbar();
                 navbar.classList.remove('scrolled');
+            } else if (currentScrollY > lastScrollY + 5) {
+                // Scrolling DOWN — hide navbar
+                hideNavbar();
+                navbar.classList.add('scrolled');
+            } else if (currentScrollY < lastScrollY - 5) {
+                // Scrolling UP — show navbar
+                showNavbar();
+                navbar.classList.add('scrolled');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // Show navbar when mouse moves close to the top of the screen
+        document.addEventListener('mousemove', (e) => {
+            if (e.clientY < 80 && isNavbarHidden) {
+                showNavbar();
             }
         });
     }
 
-    // 3. Interactive Glass Card Tilt
-    const card = document.querySelector('.glass-card');
-    if (card) {
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            card.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    // 2.5 Mobile Hamburger Menu Logic
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('nav-overlay');
+
+    if (hamburger && navLinks && navOverlay) {
+        const toggleMenu = () => {
+            hamburger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+            navOverlay.classList.toggle('open');
+            // Prevent scrolling when menu is open
+            document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('open')) {
+                    toggleMenu();
+                }
+            });
         });
     }
 
+    // 2.6 Video Demo Modal Logic
+    const btnOpenDemo = document.getElementById('btn-open-demo');
+    const btnCloseDemo = document.getElementById('btn-close-demo');
+    const videoModal = document.getElementById('video-modal');
+    const demoIframe = document.getElementById('demo-iframe');
+    
+    // Using a tech-related placeholder video (e.g. abstract tech background or similar)
+    const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; // Placeholder, the user can change this later
+
+    if (btnOpenDemo && videoModal && btnCloseDemo && demoIframe) {
+        btnOpenDemo.addEventListener('click', (e) => {
+            e.preventDefault();
+            videoModal.classList.add('active');
+            demoIframe.src = videoUrl;
+            document.body.style.overflow = 'hidden';
+        });
+
+        const closeVideoModal = () => {
+            videoModal.classList.remove('active');
+            setTimeout(() => {
+                demoIframe.src = ""; // Stop video from playing in background
+            }, 400);
+            document.body.style.overflow = '';
+        };
+
+        btnCloseDemo.addEventListener('click', closeVideoModal);
+        
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                closeVideoModal();
+            }
+        });
+    }
+
+    // 2.7 FAQ Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all items
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.faq-answer').style.maxHeight = null;
+            });
+
+            // If it wasn't active, open it
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 40 + "px"; // 40px for padding
+            }
+        });
+    });
+
+    // 3. Interactive Tilt Effects
+    const tiltElements = document.querySelectorAll('.glass-card, .metric-card');
+    tiltElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+        });
+    });
+
+    // 3.5 Magnetic Buttons
+    const magneticBtns = document.querySelectorAll('.cyber-btn, .btn-contact');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const moveX = (x - centerX) / 3;
+            const moveY = (y - centerY) / 3;
+            
+            btn.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0) scale(1)';
+        });
+    });
+
     // 4. Counter Animation for Metrics
     const counters = document.querySelectorAll('.counter');
-    const speed = 200; // The lower the slower
-
+    
     const animateCounters = () => {
         counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const inc = target / speed;
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const duration = 2000; // 2 seconds
+            const startTime = performance.now();
+            const startValue = 0;
 
-                if (count < target) {
-                    counter.innerText = (count + inc).toFixed(target % 1 !== 0 ? 1 : 0);
-                    setTimeout(updateCount, 1);
+            const update = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function: easeOutQuart
+                const easeProgress = 1 - Math.pow(1 - progress, 4);
+                const currentValue = startValue + (target - startValue) * easeProgress;
+                
+                if (target % 1 !== 0) {
+                    counter.innerText = currentValue.toFixed(1);
+                } else {
+                    counter.innerText = Math.floor(currentValue);
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
                 } else {
                     counter.innerText = target;
                 }
             };
-            updateCount();
+            
+            requestAnimationFrame(update);
         });
     };
 
@@ -69,20 +272,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (metricsSection) {
         const metricObserver = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
-                animateCounters();
-                metricObserver.disconnect(); // Only animate once
+                setTimeout(animateCounters, 300); // Slight delay for impact
+                metricObserver.disconnect();
             }
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
         metricObserver.observe(metricsSection);
     }
 
     // 5. Button click effects
     document.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.style.transform = "scale(0.95)";
-            setTimeout(() => {
-                btn.style.transform = "scale(1)";
-            }, 100);
+        btn.addEventListener('mousedown', () => {
+            btn.style.transform = "scale(0.92)";
+        });
+        btn.addEventListener('mouseup', () => {
+            btn.style.transform = "scale(1)";
+        });
+    });
+
+    // 6. Tech Stack Tabs Logic
+    const techTabs = document.querySelectorAll('.tech-tab');
+    const techCategories = document.querySelectorAll('.tech-category');
+
+    techTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-category');
+
+            // Update active tab
+            techTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Update active category with glitchy feel
+            techCategories.forEach(cat => {
+                cat.classList.remove('active');
+                if (cat.id === target) {
+                    cat.classList.add('active');
+                }
+            });
         });
     });
 

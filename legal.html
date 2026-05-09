@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Políticas Legales | NEXUS Technology</title>
+    <meta name="theme-color" content="#0a0f19">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230a0f19%22/><text x=%2250%22 y=%2270%22 font-family=%22Arial, sans-serif%22 font-size=%2260%22 font-weight=%22bold%22 fill=%22%233EB4AC%22 text-anchor=%22middle%22>N</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .legal-header {
+            padding: 150px 5% 50px;
+            text-align: center;
+        }
+        .legal-content-box {
+            max-width: 800px;
+            margin: 0 auto 100px;
+            padding: 3rem;
+            text-align: left;
+        }
+        .legal-content-box h3 {
+            color: var(--primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .legal-content-box p, .legal-content-box li {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .legal-content-box ul {
+            padding-left: 20px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <canvas id="particle-canvas"></canvas>
+    <div class="tech-grid-bg"></div>
+
+    <nav class="navbar scrolled" id="navbar">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="NEXUS Technology" class="logo-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 50%22><text x=%220%22 y=%2235%22 font-family=%22Arial%22 font-size=%2230%22 font-weight=%22bold%22 fill=%22%23fff%22>NEXUS <tspan fill=%22%233EB4AC%22>Tech</tspan></text></svg>'">
+        </a>
+        <a href="index.html" class="btn-main cyber-btn" style="padding: 10px 20px; font-size: 0.9rem;">Volver al Inicio</a>
+    </nav>
+
+    <div class="legal-header">
+        <div class="badge" id="legal-badge">Legal</div>
+        <h1 id="legal-title">Políticas y <span>Términos</span></h1>
+        <p>Última actualización: Mayo 2026</p>
+    </div>
+
+    <div class="glass-card hud-box legal-content-box" id="legal-content">
+        <!-- Content injected by JS -->
+    </div>
+
+    <script>
+        const contentData = {
+            'privacidad': {
+                title: 'Política de <span>Privacidad</span>',
+                badge: 'Privacidad y Datos',
+                content: `
+                    <h3>1. Recopilación de Información</h3>
+                    <p>En NEXUS Technology recopilamos información personal (como nombre, correo y teléfono) únicamente cuando usted nos la proporciona voluntariamente a través de nuestros formularios de contacto para solicitar demos o información sobre NEXUS ERP.</p>
+                    
+                    <h3>2. Uso de la Información</h3>
+                    <p>La información recopilada es utilizada para:
+                    <ul>
+                        <li>Proveer la información solicitada sobre nuestros sistemas.</li>
+                        <li>Notificar sobre actualizaciones críticas o parches de seguridad.</li>
+                        <li>Mejorar la experiencia de usuario y optimizar nuestra plataforma.</li>
+                    </ul></p>
+
+                    <h3>3. Protección de Datos (Nube e Infraestructura)</h3>
+                    <p>Aplicamos estrictas medidas de seguridad (encriptación AES-256) y arquitecturas Cloud Native para proteger su información contra acceso, alteración, divulgación o destrucción no autorizada.</p>
+                `
+            },
+            'terminos': {
+                title: 'Términos de <span>Servicio</span>',
+                badge: 'Términos Legales',
+                content: `
+                    <h3>1. Aceptación de los Términos</h3>
+                    <p>Al utilizar los servicios de NEXUS Technology y el software NEXUS ERP, usted acepta estar sujeto a estos términos de servicio. Si no está de acuerdo con alguna parte, no podrá utilizar nuestros sistemas.</p>
+                    
+                    <h3>2. Licencia de Uso</h3>
+                    <p>Se le otorga una licencia limitada, no exclusiva e intransferible para acceder y utilizar el software con fines empresariales, sujeta a los pagos de suscripción acordados.</p>
+
+                    <h3>3. Responsabilidad del Usuario</h3>
+                    <p>El cliente es el único responsable de la exactitud, calidad e integridad de los datos ingresados en el sistema NEXUS ERP. NEXUS Technology no se hace responsable por multas del SENIAT derivadas de mala praxis contable por parte del usuario.</p>
+                `
+            },
+            'sla': {
+                title: 'Acuerdos de Nivel de <span>Servicio (SLA)</span>',
+                badge: 'Garantía Operativa',
+                content: `
+                    <h3>1. Uptime Garantizado (99.9%)</h3>
+                    <p>NEXUS Technology garantiza que el núcleo de procesamiento de NEXUS ERP en la nube estará operativo y accesible el 99.9% del tiempo durante cada ciclo de facturación mensual.</p>
+                    
+                    <h3>2. Servidor Local de Respaldo</h3>
+                    <p>Como parte de nuestra arquitectura híbrida, el servidor local operará como mecanismo de tolerancia a fallos. El cliente es responsable de garantizar el suministro eléctrico (UPS/Plantas) en sus instalaciones para mantener la conectividad local.</p>
+
+                    <h3>3. Tiempos de Respuesta de Soporte</h3>
+                    <p>Para incidencias críticas (Caída total del sistema de facturación), nuestro equipo técnico responderá en un plazo no mayor a 30 minutos (24/7). Para consultas generales, el tiempo estimado es de 2 a 4 horas en horario de oficina.</p>
+                `
+            }
+        };
+
+        // Simple router based on URL parameters
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page') || 'privacidad'; // default to privacidad
+            
+            const data = contentData[page] || contentData['privacidad'];
+            
+            document.getElementById('legal-title').innerHTML = data.title;
+            document.getElementById('legal-badge').innerText = data.badge;
+            document.getElementById('legal-content').innerHTML = data.content;
+            document.title = data.badge + " | NEXUS Technology";
+        });
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

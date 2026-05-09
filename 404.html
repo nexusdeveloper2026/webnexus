@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Módulo no Encontrado | NEXUS Technology</title>
+    <meta name="theme-color" content="#0a0f19">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230a0f19%22/><text x=%2250%22 y=%2270%22 font-family=%22Arial, sans-serif%22 font-size=%2260%22 font-weight=%22bold%22 fill=%22%233EB4AC%22 text-anchor=%22middle%22>N</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .error-card {
+            max-width: 600px;
+            padding: 4rem 3rem;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(62, 180, 172, 0.4);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <canvas id="particle-canvas"></canvas>
+    <div class="tech-grid-bg"></div>
+    <div class="glow-bg"></div>
+
+    <div class="error-container">
+        <div class="glass-card hud-box error-card">
+            <h1 class="error-code">404</h1>
+            <h2 style="margin-top: 10px; margin-bottom: 20px;">Módulo No Encontrado</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">El enlace que has intentado procesar está corrupto o ha sido reubicado en nuestro servidor principal.</p>
+            <a href="index.html" class="btn-main cyber-btn">Reiniciar Sistema (Volver al Inicio)</a>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>

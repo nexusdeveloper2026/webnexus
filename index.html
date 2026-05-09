@@ -436,43 +436,80 @@
         </section>
 
         <section id="nosotros">
-            <div class="about-grid">
-                <div class="about-content reveal">
-                    <div class="badge">Nuestra Visión</div>
-                    <h2>Construyendo la <br><span>Infraestructura del Mañana</span></h2>
-                    <p>No somos solo una agencia de desarrollo; somos arquitectos de ecosistemas digitales. Diseñamos
-                        soluciones preparadas para escalar, integrando innovación continua y prácticas de ingeniería de
-                        nivel empresarial.</p>
-                    <p>Nuestro compromiso es acelerar el crecimiento de tu negocio mediante tecnología resiliente y
-                        diseño centrado en el ser humano.</p>
+            <div class="about-header reveal">
+                <div class="badge">Nuestra Identidad</div>
+                <h2>Conectando el <br><span>Presente con el Futuro</span></h2>
+            </div>
 
-                    <div class="about-stats-mini">
-                        <div class="stat-mini">
-                            <strong>10x</strong>
-                            <span>Escalabilidad</span>
-                        </div>
-                        <div class="stat-mini">
-                            <strong>100%</strong>
-                            <span>A Medida</span>
-                        </div>
+            <div class="about-profile reveal">
+                <div class="profile-text">
+                    <p><strong>NEXUS TECHNOLOGY</strong> es una organización en crecimiento dedicada al desarrollo de soluciones tecnológicas de vanguardia, especializada en la creación de ecosistemas digitales que unifican la información fragmentada de las empresas.</p>
+                    <p>A través de su Departamento de Desarrollo, la empresa transforma desafíos operativos en flujos continuos de inteligencia de negocio. El nombre <strong>"NEXUS"</strong> proviene del latín, significando "conexión" o "enlace", representando nuestra capacidad para unir necesidades complejas con soluciones tecnológicas eficientes.</p>
+                </div>
+            </div>
+
+            <div class="mission-vision-grid">
+                <div class="mv-card hud-box reveal">
+                    <div class="scanner"><div class="scanner-line"></div></div>
+                    <div class="mv-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>MISIÓN</h3>
+                    <p>Nuestra misión es construir el puente definitivo entre los desafíos operativos actuales de las organizaciones y las oportunidades estratégicas del futuro. Nos enfocamos en transformar el caos de los datos aislados en una arquitectura de unificación que permita a las empresas trabajar en perfecta sintonía.</p>
+                </div>
+                <div class="mv-card hud-box reveal">
+                    <div class="scanner"><div class="scanner-line"></div></div>
+                    <div class="mv-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
+                        </svg>
+                    </div>
+                    <h3>VISIÓN</h3>
+                    <p>Ser el referente global en el desarrollo de software de gestión, liderando el cambio hacia un mundo donde la tecnología y el ingenio humano converjan para generar valor infinito. Aspiramos a que cada organización deje de ser un conjunto de partes aisladas para convertirse en un organismo inteligente y sincronizado.</p>
+                </div>
+            </div>
+
+            <div class="values-section">
+                <div class="section-header reveal" style="margin-top: 60px; margin-bottom: 40px;">
+                    <div class="badge">Pilares</div>
+                    <h3>Valores Corporativos</h3>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card hud-box reveal">
+                        <div class="value-number">01</div>
+                        <h4>Innovación Continua</h4>
+                        <p>No solo nos adaptamos al cambio, lo lideramos. Buscamos constantemente nuevas formas de resolver problemas complejos mediante el uso creativo de la tecnología.</p>
+                    </div>
+                    <div class="value-card hud-box reveal">
+                        <div class="value-number">02</div>
+                        <h4>Conectividad (Nexus)</h4>
+                        <p>Creemos en el poder de los vínculos sólidos. Priorizamos la integración fluida entre sistemas, procesos y personas.</p>
+                    </div>
+                    <div class="value-card hud-box reveal">
+                        <div class="value-number">03</div>
+                        <h4>Integridad y Transparencia</h4>
+                        <p>Actuamos con rectitud y claridad en cada proyecto. La confianza de nuestros clientes es el activo más valioso que poseemos.</p>
+                    </div>
+                    <div class="value-card hud-box reveal">
+                        <div class="value-number">04</div>
+                        <h4>Excelencia en la Ejecución</h4>
+                        <p>Nos distingue la precisión técnica. Cada solución entregada debe cumplir con los más altos estándares de calidad y eficiencia.</p>
+                    </div>
+                    <div class="value-card hud-box reveal">
+                        <div class="value-number">05</div>
+                        <h4>Escalabilidad</h4>
+                        <p>Diseñamos soluciones pensando en el mañana. Creemos en el crecimiento sostenible y en la capacidad de nuestras soluciones para evolucionar junto con el cliente.</p>
                     </div>
                 </div>
-                <div class="hero-visual reveal" style="padding: 2rem;">
-                    <div class="glass-card" style="transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);">
-                        <div class="code-header">
-                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                        </div>
-                        <pre><code><span class="keyword">class</span> <span class="function">EnterpriseSystem</span> {
-  <span class="function">constructor</span>() {
-    <span class="variable">this</span>.architecture = <span class="string">'Microservices'</span>;
-    <span class="variable">this</span>.resilience = <span class="keyword">Infinity</span>;
-  }
-  
-  <span class="function">deploy</span>() {
-    <span class="keyword">return</span> <span class="string">'Success: Zero Downtime'</span>;
-  }
-}</code></pre>
-                    </div>
+            </div>
+
+            <div class="value-proposition reveal">
+                <div class="vp-content">
+                    <blockquote>"En NEXUS TECHNOLOGY, no solo implementamos tecnología; construimos el puente entre los desafíos actuales y las oportunidades del futuro."</blockquote>
                 </div>
             </div>
         </section>

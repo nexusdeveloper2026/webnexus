@@ -427,48 +427,123 @@ section {
 }
 
 /* About Section */
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+/* About Section Refactor */
+.about-header {
+    text-align: left;
+    margin-bottom: 3rem;
 }
 
-.about-content h2 {
+.about-header h2 {
     font-size: 3.5rem;
     line-height: 1.1;
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
+    margin-top: 1rem;
 }
 
-.about-content p {
+.about-profile {
+    max-width: 900px;
+    margin-bottom: 4rem;
+}
+
+.profile-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
     color: var(--text-muted);
-    font-size: 1.15rem;
     margin-bottom: 1.5rem;
 }
 
-.about-stats-mini {
-    display: flex;
-    gap: 3rem;
-    margin-top: 2.5rem;
-    border-top: 1px solid var(--glass-border);
-    padding-top: 2rem;
-}
-
-.stat-mini strong {
-    display: block;
-    font-size: 2.5rem;
+.profile-text strong {
     color: var(--primary);
-    line-height: 1;
-    font-weight: 800;
 }
 
-.stat-mini span {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
+.mission-vision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.mv-card {
+    padding: 3rem;
+    background: var(--glass);
+    border-radius: 24px;
+}
+
+.mv-icon {
+    margin-bottom: 1.5rem;
+}
+
+.mv-card h3 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
     letter-spacing: 2px;
+}
+
+.mv-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.value-card {
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+.value-card:hover {
+    background: rgba(62, 180, 172, 0.05);
+    transform: translateY(-5px);
+}
+
+.value-number {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.value-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.value-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.value-proposition {
+    margin-top: 6rem;
+    padding: 4rem;
+    background: linear-gradient(135deg, rgba(62, 180, 172, 0.1), rgba(43, 74, 140, 0.1));
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    text-align: center;
+}
+
+.vp-content blockquote {
+    font-size: 1.8rem;
     font-weight: 600;
+    color: var(--text);
+    font-style: italic;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .about-header h2 { font-size: 2.5rem; }
+    .vp-content blockquote { font-size: 1.4rem; }
+    .value-proposition { padding: 2.5rem; }
 }
 
 /* Tech Stack Section */
